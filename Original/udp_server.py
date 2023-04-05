@@ -1,8 +1,7 @@
-
-
 import cv2
 import socket
 import struct
+import numpy as np
 
 # create a socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
