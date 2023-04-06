@@ -21,7 +21,7 @@ while True:
     while True:
         # Receive frame from client
         data = b''
-        # a frame encoded with jpeg with end with '\xff\xd9'
+        # a frame encoded with jpeg ends with '\xff\xd9'
         while b'\xff\xd9' not in data:
             packet = client_socket.recv(4096)
             if not packet:

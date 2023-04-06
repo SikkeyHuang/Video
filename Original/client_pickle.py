@@ -6,10 +6,15 @@ import threading
 import time
 from queue import Queue
 
+Host = ''
+port = 8000
 
 # Initialize socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect(('localhost', 8000))
+#make the address and port reuseable
+client_socket.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+
+client_socket.connect((Host, port))
 
 # Initialize camera
 camera = cv2.VideoCapture(0)
@@ -20,7 +25,7 @@ frame_rate = 10
 while True:
     # Capture a frame from the camera
     ret, frame = camera.read()
-    if not frame:
+    if not ret:
         break
     # Convert frame to bytes for transmission
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]

@@ -5,9 +5,12 @@ import struct
 from queue import Queue
 import threading
 
+Host = ''
+port = 8000
+
 # Initialize socket
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.bind(('localhost', 8000))
+server_socket.bind((Host, port))
 server_socket.listen(1)
 
 # Initialize OpenCV window for displaying frames
@@ -19,7 +22,6 @@ while True:
     print('Client connected:', addr)
 
     '''
-    # Continuously receive frames from client and add them to queue
     data = b''
     payload_size = struct.calcsize("Q")
     while True:
@@ -50,7 +52,7 @@ while True:
     while True:
         # Receive frame from client
         while len(data) < payload_size:
-            print("Recv: {}".format(len(data)))
+            #print("Recv: {}".format(len(data)))
             data += client_socket.recv(4096)
 
         #print("Done Recv: {}".format(len(data)))
@@ -62,7 +64,7 @@ while True:
             data += client_socket.recv(4096)
         frame_data = data[:msg_size]
         data = data[msg_size:]
-
+        #print("data_size: {}".format(data))
         frame=pickle.loads(frame_data, fix_imports=True, encoding="bytes")
         frame = cv2.imdecode(frame, cv2.IMREAD_COLOR)
         cv2.imshow('ImageWindow',frame)
