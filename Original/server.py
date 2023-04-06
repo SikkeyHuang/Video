@@ -2,9 +2,12 @@ import socket
 import cv2
 import numpy as np
 
+Host = ''
+port = 8000
+
 # Initialize socket
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.bind(('localhost', 8000))
+server_socket.bind((Host, port))
 server_socket.listen(1)
 
 # Initialize OpenCV window for displaying frames
